@@ -1,0 +1,9 @@
+:root,
+#root,
+#docs.root{
+    --primary-bgimage:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url('../assets/images/movie_bg.jpg');
+    --primary-color:#000000;
+    --secondary-color:#D62D30;
+    --font-color:#8C8C8C;
+    --error: #D32F2F;
+}
