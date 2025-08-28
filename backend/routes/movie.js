@@ -24,7 +24,7 @@ router.get("/",getMovies );
 router.post("/",upload.fields([
     { name: "poster", maxCount: 1 },
     { name: "thumbnail", maxCount: 1 },
-  ]) , addMovies);
+  ]), addMovies);
 
 //view single movie details
 router.get("/:movie_id",movieDetails);

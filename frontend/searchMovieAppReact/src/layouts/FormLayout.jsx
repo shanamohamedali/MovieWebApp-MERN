@@ -17,10 +17,10 @@ export const FormLayout = ({
   return (
     <div
       className="sm:w-[450px] bg-primary-color p-3 mx-auto
-     dark:bg-white dark:text-primary-color mt-[50px] flex justify-center items-center mb-[80px]"
+    text-white mt-[50px] flex justify-center items-center mb-[80px]"
     >
       <div className="mx-10 mt-2 p-3 w-full">
-        <h3 className="text-white dark:text-primary-color text-[24px] font-[500] pb-4 ">
+        <h3 className="dark:text-white text-[24px] font-[500] pb-4 ">
           {label}
         </h3>
 
@@ -32,7 +32,7 @@ export const FormLayout = ({
         </div>
         <div className="flex justify-center items-baseline mt-12 cursor-pointer">
           <p>{Question}</p>
-          <span onClick={()=>navigate(`${linkUserReg}`)} className="text-white dark:text-primary-color ml-2">{labeluserReg}
+          <span onClick={()=>navigate(`${linkUserReg}`)} className="text-white ml-2 hover:underline">{labeluserReg}
           </span>
            {/* <Link to={linkUserReg}> {labeluserReg}</Link> */}
         </div>

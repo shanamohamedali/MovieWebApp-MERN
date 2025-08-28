@@ -19,9 +19,22 @@
     justify-content:space-between; */
     
 }
-
+@layer base {
+  h1 {
+    @apply text-4xl font-bold;
+  }
+  h2 {
+    @apply text-2xl font-semibold;
+  }
+  h3{
+    @apply text-xl font-medium;
+  }
+  h4{
+    @apply text-lg font-medium;
+  }
+}
 body{
-    
+    font-family: 'Roboto', sans-serif;
     background:var(--primary-bgimage);
     background-size: cover;
     background-position: center;
@@ -30,8 +43,8 @@ body{
     min-height: 100vh;
     height: 100%;
     max-width: 100%;
-    font-size: 14px;
-    font-weight: 400;
+    /* font-size: 14px;
+    font-weight: 400; */
     color: var(--font-color);
 
     
@@ -64,4 +77,8 @@ body.dark{
     color: var(--primary-color);
  
 
+}
+
+input,label{
+    color:rgb(79, 78, 78);
 }

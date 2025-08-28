@@ -10,7 +10,7 @@ import { IoMdArrowDropdown,IoIosGlobe } from "react-icons/io";
 export function Footer() {
   return (
     <footer className=" bottom-0 left-0 right-0 w-screen py-4 bg-primary-color flex md:flex-col
-      align-bottom dark:bg-white dark:bg-opacity-80 dark:text-primary-color 
+      align-bottom bg-opacity-80 
      text-font-color text-[13px] font-[400] mt-auto">
 
       <div className="mx-auto w-[700px] ">

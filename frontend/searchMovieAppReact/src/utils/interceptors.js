@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
+
+const { getLocalStorage, clearLocalStorage,setLocalStorage } = useLocalStorage();
+
 export const axiosInstance = axios.create({
 baseURL: "http://localhost:3007/api",
 });
-const { getLocalStorage, clearLocalStorage } = useLocalStorage();
 
+//case-1----------------Access Token only--------------------
 //attach token on request
 axiosInstance.interceptors.request.use(
    
@@ -33,3 +36,35 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+
+// //case-2 Access Token and refresh token
+
+// //token rotation
+// axiosInstance.interceptors.response.use(
+// (response)=>response,
+// async(error)=>{
+//   if(error.response.status===401){
+//     const response=await axiosInstance("/users/refresh-token");
+//     setLocalStorage("token",response.data.accessToken)
+//     //window.location.reload();
+//   }
+//   return Promise.reject(error);
+// });
+
+// //attachtokenon request
+// axiosInstance.interceptors.request.use(
+//  (request)=>{
+//     const token= getLocalStorage("token");
+//     console.log("..token received", token);
+//     if(token){
+//       request.headers.authorisaton=token;
+//       request.withCredentials=true;
+//     }
+//     return request;
+//   },
+//   (error)=>error
+// )
+
+
+

@@ -6,7 +6,8 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { FormLayout } from "../layouts/FormLayout";
 import {Input} from "../components/Input"
 import {Button} from "../components/Button";
-import axios from "axios";
+//import axios from "axios";
+import {axiosInstance} from "../utils/interceptors"
 import { BASE_API } from "../constants/Constants";
 import{toast, ToastContainer} from "react-toastify";
 
@@ -32,19 +33,21 @@ export function Login() {
     e.preventDefault();
     try {
       if (validateUsername() && validatePassword()) {
-        const response=await axios(`${BASE_API}/users/login/`,
+        const response=await axiosInstance('/users/login/',
           {
             method:"POST",
+            withCredentials:true,
             data:field,
           }
         )
         if(response)
        {
-        const{accessToken,firstname}=response.data;
+        const{accessToken,firstname,role}=response.data;
         console.log("response login..",response);
           toast.success(response.data.message);
-          login(accessToken,firstname);
-          navigate("/home");
+          login(accessToken,firstname,role);
+          if(role==="user") navigate("/home");
+          if(role==="admin") navigate("/dashboard");
          
         }
       }

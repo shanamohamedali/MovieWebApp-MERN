@@ -22,9 +22,11 @@ const movieSchema=new mongoose.Schema({
     thumbnail:{
         type:String,
     },
-    genre:[{
+    genre:[
+        {
         type:mongoose.Schema.Types.ObjectId,
         ref:"Genre",
-    }]
+    },
+]
 })
 module.exports=mongoose.model("Movies",movieSchema)

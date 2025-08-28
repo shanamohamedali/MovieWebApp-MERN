@@ -1,43 +1,42 @@
 import { createContext, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useNavigate } from "react-router-dom";
+import { axiosInstance } from "../utils/interceptors";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const { setLocalStorage, getLocalStorage, clearLocalStorage } =
     useLocalStorage();
-  const [token, setToken] = useState(false);
-  const [username,setUsername]=useState(getLocalStorage("userdata"));
+  const [token, setToken] = useState(getLocalStorage("token"));
+  const [user,setUser]=useState(getLocalStorage("userdata"));
 
-  const login = (token,name) => {
+  const login = (token,name,role) => {
+    const userData={name,role};
     setLocalStorage("token",token);
-    setLocalStorage("userdata",name)
+    setLocalStorage("userdata",userData)
     setToken(true);
-    setUsername(getLocalStorage("userdata"));
+    setUser(getLocalStorage("userdata"));
     
   };
 
-  const logout = () => {
+  const logout = async() => {
     const local = clearLocalStorage("token");
     clearLocalStorage("userdata");
-    setToken(false);
-    setUsername(getLocalStorage("userdata"))
-    // setUsername("");
-    console.log("afterlogouttoken", local);
+    setToken(null);
+    setUser(null);
+    //console.log("afterlogouttoken", local);
     //window.location.reload();
   };
 
-  const isAuthenticated = getLocalStorage("token");
+  const isAuthenticated = !!token
   console.log("tokenresAuth", isAuthenticated);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, logout, token, login,username }}>
+    <AuthContext.Provider value={{ isAuthenticated, logout, token, login,user}}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () =>  useContext(AuthContext);

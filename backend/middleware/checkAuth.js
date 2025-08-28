@@ -2,7 +2,7 @@ const { verifyAccessToken } = require("../utils/jwt");
 
 exports.checkAuth = (req, res, next) => {
   try {
-    console.log("hello check auth")
+    //console.log("hello check auth",req.headers)
     console.log(".....",req.headers.authorisation);
     const token = req.headers.authorisation;
     if (!token) {

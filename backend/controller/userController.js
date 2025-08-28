@@ -3,38 +3,11 @@ const {
   generateHashPassword,
   compareHashPassword,
 } = require("../utils/bcrypt");
-const { generateAccessToken,generateRefreshToken } = require("../utils/jwt");
-
-//login
-const login = async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    const user = await Users.findOne({ username }).select("_id firstname password");
-    //console.log("....login user",user);
-    if (user) {
-      const response = await compareHashPassword(password, user.password);
-      if (response) {
-        const accessToken = await generateAccessToken(user._id);
-        const refreshToken=await generateRefreshToken(user._id);
-        res.cookie("refreshToken",refreshToken,{
-          httpOnly:true,
-          secure:true,
-        });
-        return res.status(200).json({
-          firstname: user.firstname,
-          accessToken,
-          message: "logged in successfully",
-        });
-      }
-      return res.status(404).json({ message: "Incorrect username/password" });
-    }
-    return res.status(404).json({ message: "Incorrect username/password" });
-  } catch (error) {
-    res.status(404).json({
-      message:error.message ,
-    });
-  }
-};
+const {
+  generateAccessToken,
+  generateRefreshToken,
+  verifyRefreshToken,
+} = require("../utils/jwt");
 
 //add user details - SignUp
 const signUp = async (req, res) => {
@@ -49,6 +22,7 @@ const signUp = async (req, res) => {
         age: req.body.age,
         gender: req.body.gender,
         password: hash,
+        role:"user",
         movies: req.body.movie_id,
       };
       const usersList = await Users.create(userData);
@@ -65,19 +39,78 @@ const signUp = async (req, res) => {
   }
 };
 
+//login
+const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    const user = await Users.findOne({ username }).select(
+      "_id firstname password role"
+    );
+    //console.log("....login user",user);
+    if (!user) {
+      return res.status(404).json({ message: "Incorrect username/password" });
+    }
+    const response = await compareHashPassword(password, user.password);
+    if (!response) {
+      return res.status(404).json({ message: "Incorrect username/password" });
+    }
+    const accessToken = await generateAccessToken(user._id);
+    // const refreshToken = await generateRefreshToken(user._id);
+    // console.log("login access...", accessToken);
+    // res.cookie("refreshToken", refreshToken, {
+    //   httpOnly: true,
+    //   secure: true,
+    // });
+    res.status(200).json({
+      accessToken,
+      firstname: user.firstname,
+      role:user.role,
+      message: "logged in successfully",
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+const refreshToken = async (req, res) => {
+  console.log("cookies,,,", req.cookies);
+  const user_id = await verifyRefreshToken(req.cookies.refreshToken);
+  console.log("...refresh verfy return id", user_id);
+
+  if (!user_id) {
+    res.status(401).json("Refresh token expired/unauthorised");
+  }
+  const accessToken = await generateAccessToken(user_id);
+  const refreshToken = await generateRefreshToken(user_id);
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+  });
+  res.status(200).json({ accessToken });
+};
+
 //profile
 const profile = async (req, res) => {
   try {
-    const {_id }= req.user_id;
+    const { _id } = req.user_id;
     console.log("...req user id", req.user_id);
-    const user = await Users.findById(req.user_id)
-    .select("-password");
+    const user = await Users.findById(req.user_id).select("-password");
     console.log("...userdata", user);
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
+//logout
+// const logout=async(req,res)=>{
+//   res.clearCookie(refreshToken);
+//   res.status(200).json({
+//     message:"Logout succesfful"
+//   })
+// }
 
 //add movies to watch later
 const addWatchLater = async (req, res) => {
@@ -123,4 +156,13 @@ const getWatchLater = async (req, res) => {
   }
 };
 
-module.exports = { login, signUp, addWatchLater, getWatchLater,profile };
+module.exports = {
+  login,
+  signUp,
+  addWatchLater,
+  getWatchLater,
+  profile,
+  refreshToken,
+
+ 
+};

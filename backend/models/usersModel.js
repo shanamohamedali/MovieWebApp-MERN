@@ -28,6 +28,9 @@ const userSchema = mongoose.Schema({
     trim: true,
     required:"true",
     },
+    role:{
+      type:String,
+    },
   movies: [
     {
       type: mongoose.Schema.Types.ObjectId,

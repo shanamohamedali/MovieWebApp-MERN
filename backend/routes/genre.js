@@ -3,7 +3,7 @@ const router = express.Router();
 const { getGenre, addGenre } = require("../controller/genreController");
 
 //view genres
-router.get("/genre", getGenre);
-router.post("/genre", addGenre);
+router.get("/", getGenre);
+router.post("/", addGenre);
 
 module.exports = router;
