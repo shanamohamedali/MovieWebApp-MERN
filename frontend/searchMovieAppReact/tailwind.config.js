@@ -12,6 +12,7 @@ export default {
         "secondary-color": "var(--secondary-color)",
         "font-color": "var(--font-color)",
         error: "var(--error)",
+        "cardbg":"var(--cardbg)"
       },
       screens: {
         sm: "529px",

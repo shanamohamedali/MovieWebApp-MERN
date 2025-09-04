@@ -20,9 +20,9 @@ router.get("/",checkAuth,profile);
 // router.get('/logout',logout)
 
 //add movies to watch later
-router.put("/watchLater/:user_id",addWatchLater);
+router.put("/watchLater",checkAuth,addWatchLater);
 
 //view watch later list
-router.get("/watchLater",getWatchLater );
+router.get("/watchLater",checkAuth,getWatchLater );
  
 module.exports = router;

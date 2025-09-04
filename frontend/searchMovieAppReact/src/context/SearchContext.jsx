@@ -1,23 +1,23 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { API_URL } from "../constants/Constants";
+import { API_URL, BASE_API } from "../constants/Constants";
+import { useMovies } from "./MovieContext";
 // import { useDebounce } from "../hooks/useDebounce";
 
 export const SearchContext = createContext();
 
 export const SearchProvider = ({ children }) => {
   const [searchInput, setSearchInput] = useState("");
+  const {moviesList,fetchMovies}=useMovies();
   const [searchList, setSearchList] = useState([]);
   // useDebounce(searchInput ? fetchMovies(searchInput) : fetchMovies("movies"));
+  
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (searchInput) {
-        fetchMovies(searchInput);
+        fetchSearchedMovies(searchInput);
       }
-       else {
-        fetchMovies("movie");
-       }
     }, 300);
 
     return () => {
@@ -26,17 +26,22 @@ export const SearchProvider = ({ children }) => {
   }, [searchInput]);
 
   console.log("searchInput", searchInput);
+   console.log("movielist", moviesList);
 
-  const fetchMovies = async (query) => {
+  const fetchSearchedMovies = async (query) => {
     try {
-      const response = await axios(API_URL, {
-        params: {
-          query: query,
-        },
-      });
-      setSearchList(response.data.results);
+      // const response = await axios(`${BASE_API}/movies/`, {
+      //   params: {
+      //     query: query,
+      //   },
+      // });
+      const filteredMovie =await moviesList.filter((item)=> {
+        return Object.values(item).some((value)=>(
+        String(value).toLowerCase().includes(query.toLocaleLowerCase())
+      ))})
+      setSearchList(filteredMovie);
       console.log("....", searchList);
-      console.log("response...", response.data);
+      //console.log("response...", response.data);
     } catch (error) {
       console.log(error);
     }
@@ -64,3 +69,5 @@ export const SearchProvider = ({ children }) => {
     </SearchContext.Provider>
   );
 };
+
+export const useSearch=()=>useContext(SearchContext);

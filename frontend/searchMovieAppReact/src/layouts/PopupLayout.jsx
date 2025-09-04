@@ -13,7 +13,7 @@ const PopupLayout = ({
       <div className="bg-gray-700 fixed inset-0 z-1 w-screen h-screen overflow-y-auto p-20 bg-opacity-90 flex justify-center"
        // onClick={() => setOpenPopup(false)}
       >
-        <div className="bg-white text-primary-color flex flex-col justify-center items-center max-w-[500px] h-screen p-5 border rounded-xl text-center" >
+        <div className="bg-white text-primary-color flex flex-col justify-center items-center max-w-[500px] h-full p-5 border rounded-xl text-center" >
           <form>
             <h3>{title}</h3>
 

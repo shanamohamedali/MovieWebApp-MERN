@@ -79,7 +79,7 @@ console.log("popup state....", openPopup);
             moviesList.map((movie) => (
               <div
                 key={movie._id}
-                className="p-6 w-25 bg-white text-primary-color border rounded-3xl justify-center align-middle"
+                className="p-6 w-[25%] bg-white text-primary-color border rounded-3xl justify-center align-middle"
               >
                 <img
                   src={`http://localhost:3007/public/images/${movie.poster}`}
@@ -88,14 +88,14 @@ console.log("popup state....", openPopup);
                 />
                 <div className="pt-6 capitalize">
                   <h3>{movie.title} </h3>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1 flex-wrap">
                     {movie.genre &&
                       movie.genre.map((item) => (
                         <div
                           key={item._id}
                           className="border px-1 rounded-[4px]"
                         >
-                          <h4>{item.title}</h4>
+                          <p>{item.title}</p>
                         </div>
                       ))}
                   </div>

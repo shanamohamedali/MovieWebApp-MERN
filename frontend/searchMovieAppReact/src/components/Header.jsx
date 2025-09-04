@@ -1,17 +1,26 @@
 import React, { useContext, useState } from "react";
-import { RiMovie2Fill, RiAccountCircleLine } from "react-icons/ri";
+import { RiMovie2Fill} from "react-icons/ri";
 import { IoIosSunny, IoIosMoon } from "react-icons/io";
 import { AuthContext, useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Dashboard } from "../Pages/Dashboard";
 import { useTheme } from "../hooks/useTheme";
-
+import { FaUser } from "react-icons/fa";
+import { IoLogOut } from "react-icons/io5";
 
 export function Header() {
- const {darkMode,toggleDarkMode}=useTheme();
+  const { darkMode, toggleDarkMode } = useTheme();
 
   const { isAuthenticated, logout, user } = useAuth();
   const navigate = useNavigate();
+  // const userNavLinks = [
+  //   { href: "/dashboard", label: "Dashboard" },
+  //   { href: "", label: "" },
+  //   { href: "", label: "Logout" },
+
+  //   { href: "", label: "" },
+  //   { href: "", label: "" },
+  // ];
 
   return (
     <div>
@@ -22,34 +31,16 @@ export function Header() {
             onClick={() => navigate("/")}
           >
             <RiMovie2Fill size={40} />
-            <h2 className="text-2xl font-bold">
-              ReelMagic
-            </h2>
+            <h1>ReelMagic</h1>
           </div>
+
           <div className="flex w-100 items-center">
-            {user && (
-              <>
-              <button
-                className="border dark:border-white px-3 py-2 gap-3 ml-1 mr-2 text-sm rounded-[20px] dark:hover:bg-white dark:hover:text-primary-color"
-                onClick={() => navigate("/profile")}
-              >
-                Hi {user.name}
-              </button>
-              {user.role === "admin" && (
-              <button className="border dark:border-white px-3 py-2 gap-3 ml-1 mr-2 text-sm rounded-[20px] dark:hover:bg-white dark:hover:text-primary-color"
-               onClick={() => navigate("/dashboard")}>Dashboard</button>
-            )}
-              </>
-            )}
             <button
-              className="flex items-center px-3 py-1 gap-3 ml-1 mr-2 text-sm rounded-full dark:hover:bg-white dark:hover:text-primary-color hover:bg-primary-color hover:text-white"
+              className="flex items-center px-3 py-1 gap-1 ml-1 mr-2 text-sm rounded-full dark:hover:bg-white dark:hover:text-primary-color hover:bg-primary-color hover:text-white"
               onClick={() => toggleDarkMode()}
             >
               {darkMode && (
-                <IoIosSunny
-                  size={32}
-                  className=" hover:text-primary-color"
-                />
+                <IoIosSunny size={32} className=" hover:text-primary-color" />
               )}
               {!darkMode && (
                 <IoIosMoon
@@ -58,15 +49,41 @@ export function Header() {
                 />
               )}
             </button>
-            
+
+            {user && (
+              <>
+                <Link
+                  to="/profile"
+                  className="flex items-center px-3 py-2 gap-1 ml-1 mr-2 text-sm rounded-[20px] dark:hover:bg-white dark:hover:text-primary-color"
+                >
+                <FaUser size={20} />
+                Hi {user.name}
+                </Link>
+                {user.role === "admin" && (
+                  <Link to="/dashboard"
+                    className="px-3 py-2 gap-3 ml-1 mr-2 text-sm rounded-[20px] dark:hover:bg-white dark:hover:text-primary-color"
+                     >
+                    Dashboard
+                  </Link>
+                )}
+                {user.role === "user" && (
+                  <Link to="/my-movies"
+                    className="border dark:border-white px-3 py-2 gap-3 ml-1 mr-2 text-sm rounded-[20px] dark:hover:bg-white dark:hover:text-primary-color"
+                    >
+                    My Movies
+                  </Link>
+                )}
+              </>
+            )}
 
             {isAuthenticated && (
               <button
-                className="flex items-center border dark:border-white border-primary-color px-3 py-2 gap-3 ml-1 mr-2 text-sm rounded-[20px] dark:hover:bg-white dark:hover:text-primary-color"
+                className="flex items-center border-primary-color px-3 py-2 gap-1 ml-1 mr-2 text-sm rounded-[20px] dark:hover:bg-white dark:hover:text-primary-color"
                 onClick={logout}
               >
+                <IoLogOut size={20} />
                 Logout
-                <RiAccountCircleLine />
+               
               </button>
             )}
           </div>

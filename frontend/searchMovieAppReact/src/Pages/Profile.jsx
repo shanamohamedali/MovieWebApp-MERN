@@ -6,6 +6,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
 import { axiosInstance } from "../utils/interceptors";
+import { FaUser } from "react-icons/fa";
 
 export const Profile = () => {
    const abortController=useRef(new AbortController());
@@ -50,10 +51,13 @@ export const Profile = () => {
 
   console.log("userdata",userData);
   return (
-    <div className="flex flex-col text-center">
-      <h2>Name:{userData.firstname}</h2>
-      <h2>Age:{userData.age}</h2>
-      <h2>Gender:{userData.gender}</h2>
+    <div className="flex flex-col text-center items-center my-[50px]">
+      <FaUser size={50}/>
+      <div className="pt-5">
+        <h4>Name:{userData.firstname}</h4>
+      <h4>Age:{userData.age}</h4>
+      <h4>Gender:{userData.gender}</h4>
+      </div>
      
       <ToastContainer />
     </div>

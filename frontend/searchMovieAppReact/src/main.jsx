@@ -8,14 +8,13 @@ import { BrowserRouter } from "react-router-dom";
 import { MovieProvider } from "./context/MovieContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-
-    <BrowserRouter>
-      <AuthProvider>
+  <BrowserRouter>
+    <AuthProvider>
+      <MovieProvider>
         <SearchProvider>
-          <MovieProvider>
           <App />
-          </MovieProvider>
         </SearchProvider>
-      </AuthProvider>
-    </BrowserRouter>
+      </MovieProvider>
+    </AuthProvider>
+  </BrowserRouter>
 );

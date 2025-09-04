@@ -32,7 +32,8 @@
   h4{
     @apply text-lg font-medium;
   }
-}
+  }
+
 body{
     font-family: 'Roboto', sans-serif;
     background:var(--primary-bgimage);
@@ -63,7 +64,6 @@ button{
 }
 
 body.dark{
-   
     background-image:linear-gradient(rgba(255, 255, 255, 0.9),rgba(255, 255, 255, 0.9)),url('../assets/images/movie_bg.jpg');
     background-size: cover;
     background-position: center;
@@ -81,4 +81,11 @@ body.dark{
 
 input,label{
     color:rgb(79, 78, 78);
+}
+.fade_bottom{
+
+    height: 7.4rem;
+    background-image: linear-gradient(180deg,transparent,rgba(37,37,37,.61),#1e1e1e);
+    
+
 }

@@ -42,10 +42,10 @@ export function Login() {
         )
         if(response)
        {
-        const{accessToken,firstname,role}=response.data;
+        const{accessToken,_id,firstname,role}=response.data;
         console.log("response login..",response);
           toast.success(response.data.message);
-          login(accessToken,firstname,role);
+          login(accessToken,_id,firstname,role);
           if(role==="user") navigate("/home");
           if(role==="admin") navigate("/dashboard");
          

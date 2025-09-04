@@ -16,6 +16,7 @@ import { NotFound } from "./Pages/NotFound";
 import { Dashboard } from "./Pages/Dashboard";
 import { AddGenre } from "./Pages/AddGenre";
 import { AddMovie } from "./Pages/AddMovie";
+import { WatchLater } from "./Pages/WatchLater";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/add-genre" element={<AddGenre />} />
             <Route path="/add-movie" element={<AddMovie />} />
+             <Route path="/my-movies" element={<WatchLater/>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

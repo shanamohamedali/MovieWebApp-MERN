@@ -1,3 +1,4 @@
+const { model } = require("mongoose");
 const Users = require("../models/usersModel");
 const {
   generateHashPassword,
@@ -63,6 +64,7 @@ const login = async (req, res) => {
     // });
     res.status(200).json({
       accessToken,
+      _id:user._id,
       firstname: user.firstname,
       role:user.role,
       message: "logged in successfully",
@@ -115,23 +117,26 @@ const profile = async (req, res) => {
 //add movies to watch later
 const addWatchLater = async (req, res) => {
   try {
-    const movie_id = req.body.movie_id;
+    console.log("hello",req.user_id);
+    //const {user_id,movie_id} = req.body;
     const updatedWatchLater = await Users.findByIdAndUpdate(
-      req.params.user_id,
+      req.user_id,
       {
-        //$addToSet: { movies: movie_id }, //avoid duplication
-        $push: {
-          movies: req.body.movie_id,
-        },
+        $addToSet: { movies: req.body.movie_id }, //avoid duplication
+        // $push: {
+        //   movies: movie_id,
+        // },
       },
       {
         new: true,
       }
-    );
-    res.status(200).json(updatedWatchLater);
+    ).select("-password -username");
+    res.status(200).json({message:"Movie added to the watchlist successfully",
+      updatedWatchLater});
   } catch (error) {
+    console.log(error)
     res.status(400).json({
-      message: error.message,
+      message: "failed:movie not added,"+ error,
     });
   }
 };
@@ -139,14 +144,22 @@ const addWatchLater = async (req, res) => {
 //view watch later list
 const getWatchLater = async (req, res) => {
   try {
-    const watchLaterList = await Users.find({ _id: req.body.user_id })
+    const watchLaterList = await Users.find({ _id: req.user_id })
       .select("movies")
-      .populate("movies");
+      .populate({
+        path:"movies",
+          populate:{
+            path:"genre",
+            
+          }
+        });
+     
+    
     if (watchLaterList) {
       //const newWatchList=[...new set(watchLaterList)]; //avoid duplicates
-      res.status(200).json(watchLaterList);
+      return res.status(200).json(watchLaterList);
     }
-    res.status(400).json({
+    return res.status(400).json({
       message: "Empty! There is no movies in your list",
     });
   } catch (error) {
