@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, useState } from "react";
 
 const PopupLayout = ({
   setOpenPopup,
@@ -9,12 +9,11 @@ const PopupLayout = ({
   children,
 }) => {
   return (
-  
       <div className="bg-gray-700 fixed inset-0 z-1 w-screen h-screen overflow-y-auto p-20 bg-opacity-90 flex justify-center"
-       // onClick={() => setOpenPopup(false)}
+        // onClick={() => setOpenPopup(false)}
       >
-        <div className="bg-white text-primary-color flex flex-col justify-center items-center max-w-[500px] h-full p-5 border rounded-xl text-center" >
-          <form>
+        <div className="bg-white text-primary-color flex flex-col justify-center items-center max-w-[500px] text-center" >
+          <form className="bg-white p-5 border rounded-xl">
             <h3>{title}</h3>
 
             <main>{children}</main>

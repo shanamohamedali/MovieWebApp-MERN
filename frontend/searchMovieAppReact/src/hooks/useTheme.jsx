@@ -3,7 +3,7 @@ import { useLocalStorage } from "./useLocalStorage";
 
 export const useTheme = () => {
   const{setLocalStorage,getLocalStorage}=useLocalStorage();
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
   // const darkModeToggler = () => {
   //   setDark(!dark);
   //   document.body.classList.toggle("dark", !darkMode);
@@ -20,7 +20,13 @@ export const useTheme = () => {
   const toggleDarkMode = () => {
     const newTheme = darkMode ? "light" : "dark";
     setDarkMode(!darkMode);
-    document.body.classList.toggle("dark", newTheme === "dark");
+    if(newTheme==="dark"){
+      document.body.classList.add("dark");
+    }else
+    {
+      document.body.classList.remove("dark")
+    }
+    
     setLocalStorage("theme", newTheme);
   };
 

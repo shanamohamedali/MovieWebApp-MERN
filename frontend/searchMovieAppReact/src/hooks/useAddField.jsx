@@ -10,6 +10,7 @@ console.log("....initial value",initialValue);
       [e.target.name]: e.target.value,
     }));
   };
+  
   const handleFile = (e) => {
     setField((prev) => ({
       ...prev,

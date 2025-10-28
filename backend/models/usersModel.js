@@ -30,6 +30,8 @@ const userSchema = mongoose.Schema({
     },
     role:{
       type:String,
+      default:"user",
+      enum:["user","admin"],
     },
   movies: [
     {

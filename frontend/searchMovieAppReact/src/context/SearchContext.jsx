@@ -60,6 +60,7 @@ export const SearchProvider = ({ children }) => {
       value={{
         searchInput,
         searchList,
+        setSearchList,
         handleChange,
         clearSearch,
         fetchMovies,

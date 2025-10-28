@@ -2,32 +2,62 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useMovies } from "../context/MovieContext";
 import { Rating } from "./Rating";
+import { MovieCard } from "./MovieCard";
+import { FaHeartCirclePlus } from "react-icons/fa6";
+import { axiosInstance } from "../utils/interceptors";
 
 export const MovieList = ({ moviesList }) => {
   const { fetchSeclectedMovie, movie } = useMovies();
+  const [hoveredItem, setHoveredItem] = useState(null);
 
-  // useEffect(() => {
-  //   fetchMovies();
-  // }, []);
+const handleWatchLater = async (e, movie_id) => {
+    try {
+      e.preventDefault();
+      
+      const response = await axiosInstance("/users/watchLater", {
+        method: "PUT",
+        data: {
+          movie_id,
+         
+        },
+      });
+        console.log(",,,watchlater", response);
+         toast.success(response.data.message);
+      
+    } catch (error) {
+      console.log(error.message);
+      //toast.error(error.response.data.message);
+    }
+  };
+
+
 
   return (
     <>
-      {/* <div className=" md:px-[50px] md:py-[50px] lg:px-[156px] lg:py-[52px]">
-        <div className="grid sm:grid-flow-row md:grid-cols-3 lg:grid-cols-5 gap-3 justify-items-center"> */}
       {MovieList &&
         moviesList.map((data) => (
           <div
             key={data._id}
-            className="w-[180px] h-[240px] my-14 object-cover bg-cardbg"
+            className="sm:basis-6/12 md:basis-4/12 lg:basis-3/12 my-3 object-cover bg-cardbg relative"
             onClick={() => fetchSeclectedMovie(data._id)}
+            onMouseEnter={() => setHoveredItem(data._id)}
+            onMouseLeave={() => setHoveredItem(null)}
           >
+             <div className="absolute right-3 top-2 cursor-pointer" onClick={(e) => handleWatchLater(e,data._id)}>
+              <FaHeartCirclePlus size={20} color="red"/>
+              </div>
             <img
-              src={`http://localhost:3007/public/images/${data.thumbnail}`}
-              className="w-[250px] h-[240px] object-fit rounded-xl"
+              src={data.poster}
+              className="w-full h-full object-cover rounded-xl"
             />
-
-            <h3 className="overflow-hidden py-2 capitalize ">{data.title}</h3>
-            <Rating value={data.rating} />
+            {hoveredItem===data._id && (
+              <div className="bg-primary-color absolute bottom-0 w-full rounded-b-xl flex flex-col justify-center items-center p-5">
+                <h5 className="overflow-hidden py-2 capitalize ">
+                  {data.title}
+                </h5>
+                <Rating value={data.rating} />
+              </div>
+            )}
           </div>
         ))}
     </>

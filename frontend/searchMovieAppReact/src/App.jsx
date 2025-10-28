@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { Login } from "./Pages/Login";
@@ -17,8 +17,10 @@ import { Dashboard } from "./Pages/Dashboard";
 import { AddGenre } from "./Pages/AddGenre";
 import { AddMovie } from "./Pages/AddMovie";
 import { WatchLater } from "./Pages/WatchLater";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 
 function App() {
+ 
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
@@ -37,7 +39,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/add-genre" element={<AddGenre />} />
             <Route path="/add-movie" element={<AddMovie />} />
-             <Route path="/my-movies" element={<WatchLater/>} />
+            <Route path="/my-movies" element={<WatchLater />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

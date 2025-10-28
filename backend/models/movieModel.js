@@ -19,9 +19,6 @@ const movieSchema=new mongoose.Schema({
     poster:{
         type: String,
     },
-    thumbnail:{
-        type:String,
-    },
     genre:[
         {
         type:mongoose.Schema.Types.ObjectId,

@@ -4,3 +4,5 @@ export const API_URL =
 export const BASE_API="http://localhost:3007/api";
 
 export const DEFAULT_DELAY=300;
+
+export const CLOUDINARY_API=`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_cloud_name}/image/upload`

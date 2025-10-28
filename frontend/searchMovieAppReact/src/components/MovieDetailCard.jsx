@@ -36,14 +36,13 @@ export const MovieDetailCard = ({ movie, setViewMovie }) => {
       className="bg-gray-700 fixed inset-0 z-1 w-screen h-screen overflow-y-auto p-20 bg-opacity-90 flex justify-center"
       onClick={() => setViewMovie(false)}
     >
-      <div className=" md:px-[50px] md:py-[50px] lg:px-[156px] lg:py-[52px]">
-        <div className="bg-[cardbg] flex items-center gap-3 mb-5 pb-5 sm:flex-col md:flex-row">
-          <div>
+      <div className="flex gap-3 md:px-[50px] md:py-[50px] lg:px-[156px] lg:py-[52px] bg-black rounded-md h-[100vh]">
+        {/* <div className="bg-[cardbg] flex justify-center gap-3 mb-5 pb-5 sm:flex-col md:flex-row flex-wrap"> */}
+          <div className="object-contain items-start  w-[300px] h-[400px]">
             <img
-              src={`http://localhost:3007/public/images/${movie.poster}`}
+              src={movie.poster}
               alt="image-poster"
-              width={300}
-              height={200}
+              className="overflow-hidden object-contain"
             />
           </div>
           <div className="flex flex-col gap-5 justify-center bg-cardbg">
@@ -64,7 +63,7 @@ export const MovieDetailCard = ({ movie, setViewMovie }) => {
               onClick={(e) => handleWatchLater(e,movie._id)}
             />
           </div>
-        </div>
+        {/* </div> */}
       </div>
       <ToastContainer />
     </div>

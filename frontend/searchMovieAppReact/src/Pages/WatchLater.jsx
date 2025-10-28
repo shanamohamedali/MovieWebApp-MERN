@@ -5,9 +5,11 @@ import { axiosInstance } from "../utils/interceptors";
 import { ToastContainer, toast } from "react-toastify";
 import { Rating } from "../components/Rating";
 import { Button } from "../components/Button";
+import { FaTrashCan } from "react-icons/fa6";
 
 export const WatchLater = () => {
   const [myMovies, setMyMovies] = useState([]);
+  const [hoveredItem, setHoveredItem] = useState(null);
   const fetchWatchList = async () => {
     try {
       const response = await axiosInstance("/users/watchLater", {
@@ -27,28 +29,39 @@ export const WatchLater = () => {
   return (
     <div>
       <div className=" md:px-[50px] md:py-[50px] lg:px-[156px] lg:py-[52px]">
-        <div className="grid sm:grid-flow-row md:grid-cols-3 lg:grid-cols-5 gap-2 justify-items-center pb-10">
+        {/* <div className="grid sm:grid-flow-row md:grid-cols-3 lg:grid-cols-3 gap-5 justify-items-center pb-10"> */}
+        <div className="flex flex-row gap-3 justify-evenly flex-wrap">
           {myMovies.length !== 0 &&
             myMovies.map((data) => (
               <div
                 key={data._id}
-                className="w-[180px] h-[240px] my-14 object-cover bg-cardbg">
-                <img
-                  src={`http://localhost:3007/public/images/${data.thumbnail}`}
-                  className="w-[250px] h-[240px] object-fit rounded-xl"
-                />
-                
-                <div className="flex gap-3 flex-wrap">
-                  {data.genre &&
-                    data.genre.map((item) => (
-                      <div key={item._id} className="border px-1 rounded-[4px] capitalize">
-                        <p>{item.title}</p>
-                      </div>
-                    ))}
+                onMouseEnter={() => setHoveredItem(data._id)}
+                onMouseLeave={() => setHoveredItem(null)}
+                className="sm:basis-2/6 lg:basis-3/12 flex justify-center items-center bg-primary-color min-h-[250px] max-h-[600px] my-14 gap-3 relative"
+              >
+                <div className="absolute right-3 top-2 cursor-pointer">
+                  <FaTrashCan size={12}/>
                 </div>
-                <h3 className="px-2 capitalize">{data.title}</h3>
-                <Rating value={data.rating} />
-                <Button type="button" label="Watch Now"/>
+                <div className="basis-3/6">
+                  <img
+                    src={data.poster}
+                    className="max-h-[500px] w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-5 justify-center bg-cardbg pt-5">
+                  <div className="flex gap-3 flex-wrap">
+                    {data.genre &&
+                      data.genre.map((item) => (
+                        <div key={item._id} className="capitalize text-red-900">
+                          <p>{item.title},</p>
+                        </div>
+                      ))}
+                  </div>
+                  <h3 className="px-2 capitalize">{data.title}</h3>
+                  <Rating value={data.rating} />
+                  <Button type="button" label="Watch Now" />
+                </div>
               </div>
             ))}
         </div>

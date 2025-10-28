@@ -21,12 +21,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async() => {
-    const local = clearLocalStorage("token");
+    clearLocalStorage("token");
     clearLocalStorage("userdata");
     setToken(null);
     setUser(null);
     //console.log("afterlogouttoken", local);
-    //window.location.reload();
+    window.location.reload();
   };
 
   const isAuthenticated = !!token

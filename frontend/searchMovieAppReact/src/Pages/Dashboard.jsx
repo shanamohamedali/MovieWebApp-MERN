@@ -5,51 +5,48 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Rating } from "../components/Rating";
 import { DeleteMovie } from "./DeleteMovie";
-import {EditMovies} from "./EditMovies";
+import { EditMovies } from "./EditMovies";
 import { Link } from "react-router-dom";
 import { useMovies } from "../context/MovieContext";
 import { Sidebar } from "../components/Sidebar";
 
 export const Dashboard = () => {
   const [openPopup, setOpenPopup] = useState({
-    edit:false,
-    delete:false,
+    edit: false,
+    delete: false,
   });
   const [selectedMovie, setSelectedMovie] = useState("");
-  const {fetchMovies,moviesList}=useMovies();
+  const { fetchMovies, moviesList } = useMovies();
 
   useEffect(() => {
     fetchMovies();
-  }, []);
+  }, [openPopup]);
 
   console.log("movielist.....", moviesList);
 
   const fetchSelectedMovie = async (itemId) => {
-      try {
-        console.log("hello from fetch")
-        const response = await moviesList.filter((movie) => movie._id === itemId);
-        //console.log("movie found", response);
-        return response;
-      } catch (error) {
-        console.log("No movie found with this id", error);
-      }
-    };
+    try {
+      console.log("hello from fetch");
+      const response = await moviesList.filter((movie) => movie._id === itemId);
+      //console.log("movie found", response);
+      return response;
+    } catch (error) {
+      console.log("No movie found with this id", error);
+    }
+  };
 
-    //handle popup
-  const handlePopUp =async (e, _id) => {
-    console.log("....id", _id);
-
-    const action=e.currentTarget.name;
-    setOpenPopup((prev)=>({
+  //handle popup
+  const handlePopUp = async (e, _id) => {
+    const action = e.currentTarget.name;
+    console.log("....id", action);
+    setOpenPopup((prev) => ({
       ...prev,
-      [action]:!prev[action],
+      [action]: !prev[action],
     }));
-    const movieDetails=await fetchSelectedMovie(_id); 
+    const movieDetails = await fetchSelectedMovie(_id);
     setSelectedMovie(movieDetails[0]);
   };
-console.log("popup state....", openPopup);
-
-
+  console.log("popup state....", openPopup);
 
   const handleDelete = async (e) => {
     try {
@@ -71,24 +68,27 @@ console.log("popup state....", openPopup);
   return (
     <div className="flex gap-4 p-5">
       {/* leftSection */}
-      <Sidebar/>
+      <div className="">
+  <Sidebar />
+      </div>
+    
       {/* rightSection */}
-      <section>
-        <div className="flex gap-5 flex-wrap">
+      <section className="justify-end">
+        <div className="flex items-start gap-5 flex-wrap">
           {moviesList &&
             moviesList.map((movie) => (
               <div
                 key={movie._id}
-                className="p-6 w-[25%] bg-white text-primary-color border rounded-3xl justify-center align-middle"
+                className="p-6 basis-[30%] bg-white text-primary-color border rounded-3xl justify-evenly align-middle"
               >
                 <img
-                  src={`http://localhost:3007/public/images/${movie.poster}`}
+                  src={movie.poster}
                   alt=""
-                  className="h-[200px] w-[200px] object-contain"
+                  className="h-[300px] w-full object-cover"
                 />
                 <div className="pt-6 capitalize">
                   <h3>{movie.title} </h3>
-                  <div className="flex gap-1 flex-wrap">
+                  <div className="flex gap-1 flex-wrap mt-2">
                     {movie.genre &&
                       movie.genre.map((item) => (
                         <div
@@ -100,13 +100,19 @@ console.log("popup state....", openPopup);
                       ))}
                   </div>
 
-                  <div className="flex justify-between">
+                  <div className="flex justify-between mt-3">
                     <Rating value={movie.rating} />
                     <div className="flex">
-                      <button name="edit" onClick={(e) => handlePopUp(e,movie._id)}>
+                      <button
+                        name="edit"
+                        onClick={(e) => handlePopUp(e, movie._id)}
+                      >
                         <FaEdit />
                       </button>
-                      <button name="delete" onClick={(e) => handlePopUp(e,movie._id)}>
+                      <button
+                        name="delete"
+                        onClick={(e) => handlePopUp(e, movie._id)}
+                      >
                         <MdDelete />
                       </button>
                     </div>
@@ -118,10 +124,14 @@ console.log("popup state....", openPopup);
       </section>
       <ToastContainer />
       {openPopup.delete && (
-        <DeleteMovie setOpenPopup={setOpenPopup} handleDelete={handleDelete} selectedMovie={selectedMovie} />
+        <DeleteMovie
+          setOpenPopup={setOpenPopup}
+          handleDelete={handleDelete}
+          selectedMovie={selectedMovie}
+        />
       )}
-        {openPopup.edit && (
-        <EditMovies setOpenPopup={setOpenPopup} selectedMovie={selectedMovie}/>
+      {openPopup.edit && (
+        <EditMovies setOpenPopup={setOpenPopup} selectedMovie={selectedMovie} />
       )}
     </div>
   );

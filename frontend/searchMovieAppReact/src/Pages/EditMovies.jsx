@@ -5,67 +5,86 @@ import { useMovies } from "../context/MovieContext";
 import { useEffect } from "react";
 import { useAddField } from "../hooks/useAddField";
 import { axiosInstance } from "../utils/interceptors";
+import axios from "axios";
+import { CLOUDINARY_API } from "../constants/Constants";
 
 export const EditMovies = ({ setOpenPopup, selectedMovie }) => {
-  const { moviesList, genre, fetchGenres,fetchMovies } = useMovies();
-  const {_id,title,rating,poster,thumbnail,genreArray}=selectedMovie;
+  const { moviesList, genre, fetchGenres, fetchMovies } = useMovies();
+  const { _id, title, rating, poster, genreArray } = selectedMovie;
   const { field, setField, handleChange, handleFile, handleCheckbox } =
     useAddField("");
-   const[message,setMessage]=useState("");
-    const checkedItem=selectedMovie.genre?.map((item)=>item._id) || [];
+  const [message, setMessage] = useState("");
+  const checkedItem = selectedMovie.genre?.map((item) => item._id) || [];
 
   console.log("...field items", field);
   console.log("...movie", selectedMovie);
-    console.log("...checked", checkedItem);
+  console.log("...checked", checkedItem);
 
   useEffect(() => {
     fetchGenres();
   }, []);
 
-  useEffect(()=>{
-    setField({_id:_id,
-      title:title,
-      rating:rating,
-      poster:poster,
-      thumbnail:thumbnail,
-      genre:checkedItem});
-  },[selectedMovie])
+  useEffect(() => {
+    setField({
+      _id: _id,
+      title: title,
+      rating: rating,
+      poster: poster,
+      genre: checkedItem,
+    });
+  }, [selectedMovie]);
 
   const handleEdit = async (e) => {
     try {
       e.preventDefault();
-      const { _id, title, rating, poster, thumbnail, genre } = field;
-      const formData = new FormData();
-       formData.append("_id", _id);
-      formData.append("poster", poster);
-      formData.append("thumbnail", thumbnail);
-      formData.append("title", title);
-      formData.append("rating", rating);
-      genre.forEach((id) => {
-        formData.append("genre[]", id);
-      });
+      const { _id, title, rating, poster, genre } = field;
+      console.log(".....fields",field);
+      const posterUrl=poster.split("/");
+      console.log("....array",posterUrl);
+      const searchString="res.cloudinary.com"
+      // const check=posterUrl.includes(searchString);
+      // console.log(",x.<x.<",check);
+      let editData=field;
+
+      if (!posterUrl.includes(searchString)) {
+        //console.log("no")
+        const formData = new FormData();
+        formData.append("file", poster);
+        formData.append("upload_preset", import.meta.env.VITE_upload_preset);
+        formData.append("cloud_name", import.meta.env.VITE_cloud_name);
+        const response = await axios(CLOUDINARY_API, {
+          method: "POST",
+          data: formData,
+        });
+        let editData={
+           _id:_id,
+            title:title, 
+            rating:rating, 
+            poster:response.data.url, 
+            genre: genre
+        }
+        console.log("Failed to upload image in cloudinary");
+      }
+      
 
       const response = await axiosInstance("/movies/", {
         method: "PUT",
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-        data: formData,
+        // headers: {
+        //   "content-type": "multipart/form-data",
+        // },
+        data: editData,
       });
       console.log(response);
-      
-     if(response){
-      //fetchMovies();
-      setMessage(response.data.message);
-     await fetchMovies();
-     setOpenPopup(false);
-     
-     }
 
-    
+      if (response) {
+        //fetchMovies();
+        setMessage(response.data.message);
+        await fetchMovies();
+        setOpenPopup(false);
+      }
     } catch (error) {
       console.log("Updating movie details failed", error);
-      setMessage(error.response.data.message)
+      setMessage(error.response.data.message);
     }
   };
 
@@ -110,7 +129,7 @@ export const EditMovies = ({ setOpenPopup, selectedMovie }) => {
           accept="image/*"
           name="poster"
           id="poster"
-         value={field.name}
+          value={field.name}
           onChange={handleFile}
         />
         <div className="text-left">
@@ -122,7 +141,7 @@ export const EditMovies = ({ setOpenPopup, selectedMovie }) => {
           accept="image/*"
           name="thumbnail"
           id="thumbnail"
-       value={field.name}
+          value={field.name}
           onChange={handleFile}
         />
         <div className="text-left ">
@@ -139,8 +158,7 @@ export const EditMovies = ({ setOpenPopup, selectedMovie }) => {
                     name="genre"
                     id={item.title}
                     onClick={handleCheckbox}
-                    defaultChecked={(checkedItem).includes(item._id)}
-
+                    defaultChecked={checkedItem.includes(item._id)}
                   />
                   {item.title}
                 </label>
