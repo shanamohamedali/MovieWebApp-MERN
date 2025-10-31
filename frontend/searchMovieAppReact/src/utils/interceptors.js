@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-
+import { BASE_API } from "../constants/Constants";
+//"http://localhost:3007/api"
 
 const { getLocalStorage, clearLocalStorage,setLocalStorage } = useLocalStorage();
 
 export const axiosInstance = axios.create({
-baseURL: "http://localhost:3007/api",
+baseURL: BASE_API,
 });
 
 //case-1----------------Access Token only--------------------
