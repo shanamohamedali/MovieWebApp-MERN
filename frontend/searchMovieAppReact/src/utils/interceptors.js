@@ -30,6 +30,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     //console.log("eroooooor",error);
     if (error.response.status === 401) {
+      setLocalStorage("token",null);
       clearLocalStorage("token");
       window.location.href="/login"
     }

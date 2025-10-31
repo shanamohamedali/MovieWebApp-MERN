@@ -24,16 +24,6 @@ const getMovies = async (req, res) => {
   }
 };
 
-// //delete uploaded files from folder
-// const deleteUploadedFiles = (files) => {
-//   const deleteFile = (file) => {
-//     fs.unlink(file.path, (err) => {
-//       if (err) console.log("failed to delete file", err);
-//     });
-//   };
-//   if (files?.poster) deleteFile(files.poster[0]);
-//   if (files?.thumbnail) deleteFile(files.thumbnail[0]);
-// };
 //add new movies
 const addMovies = async (req, res) => {
   try {
@@ -207,3 +197,14 @@ module.exports = {
   deleteMovie,
   findMovie,
 };
+
+// //delete uploaded files from folder
+// const deleteUploadedFiles = (files) => {
+//   const deleteFile = (file) => {
+//     fs.unlink(file.path, (err) => {
+//       if (err) console.log("failed to delete file", err);
+//     });
+//   };
+//   if (files?.poster) deleteFile(files.poster[0]);
+//   if (files?.thumbnail) deleteFile(files.thumbnail[0]);
+// };
