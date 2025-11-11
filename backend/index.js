@@ -13,7 +13,7 @@ const genreRouter=require('./routes/genre');
 //   credentials:true,
 // }));
 app.use(cors({
-  origin:"http://movie-web-app-mern-client.vercel.app",
+  origin:"https://movie-web-app-mern-client.vercel.app",
   credentials:true,
 }));
 
