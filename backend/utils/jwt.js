@@ -3,7 +3,7 @@ const jwt=require("jsonwebtoken");
 const generateAccessToken=(user_id)=>{
     return jwt.sign({
   data: user_id
-}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '120' });
+}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '2h' });
 };
 
 const generateRefreshToken=(user_id)=>{

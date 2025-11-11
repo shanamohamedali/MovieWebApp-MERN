@@ -16,6 +16,7 @@ const handleWatchLater = async (e, movie_id) => {
       
       const response = await axiosInstance("/users/watchLater", {
         method: "PUT",
+        withCredentials:true,
         data: {
           movie_id,
          
