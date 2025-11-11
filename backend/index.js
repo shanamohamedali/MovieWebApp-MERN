@@ -16,7 +16,7 @@ app.use(cors({
   origin:"https://movie-web-app-mern-client.vercel.app",
   credentials:true,
 }));
-//app.use(cors({credentials:true}));
+app.use('*',cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use('/public/images',express.static('public/images'));

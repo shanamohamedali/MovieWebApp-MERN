@@ -37,6 +37,9 @@ export function Login() {
           {
             method:"POST",
             withCredentials:true,
+            headers:{
+              "Content-Type":"application/json"
+            },
             data:field,
           }
         )
