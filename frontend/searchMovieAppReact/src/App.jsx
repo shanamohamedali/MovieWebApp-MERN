@@ -17,7 +17,7 @@ import { Dashboard } from "./Pages/Dashboard";
 import { AddGenre } from "./Pages/AddGenre";
 import { AddMovie } from "./Pages/AddMovie";
 import { WatchLater } from "./Pages/WatchLater";
-import { useLocalStorage } from "./hooks/useLocalStorage";
+
 
 function App() {
  

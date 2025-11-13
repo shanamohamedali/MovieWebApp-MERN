@@ -42,7 +42,7 @@ export const WatchLater = () => {
                 <div className="absolute right-3 top-2 cursor-pointer">
                   <FaTrashCan size={12}/>
                 </div>
-                <div className="basis-3/6">
+                <div className="basis-3/6 h-full">
                   <img
                     src={data.poster}
                     className="max-h-[500px] w-full h-full object-cover"
