@@ -1,5 +1,5 @@
 ## Movie Search App (Sample Netflix Clone)
-  A simple movie search app developed using React. Where you can log in using a username and password, you can see a list of movies on the home page and search for movies.
+  A movie search app developed using MERN. Where you can log in using a username and password, you can see a list of movies on the home page, search for movies, and also add movies to the watch later list.
   
   ![img](https://github.com/shanamohamedali/searchMovieAppReact/blob/master/Screenshot_12-1-2025_165959_localhost.jpeg)
   ![img](https://github.com/shanamohamedali/searchMovieAppReact/blob/master/Screenshot_12-1-2025_165432_localhost.jpeg)
