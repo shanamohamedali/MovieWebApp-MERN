@@ -35,7 +35,7 @@ export function Header() {
             <h1>ReelMagic</h1>
           </div>
 
-          <div className="flex w-100 items-center">
+          <div className="flex w-100 items-center text-black dark:text-white">
             <button
               className="flex items-center px-3 py-1 gap-1 ml-1 mr-2 text-sm rounded-full dark:hover:bg-white dark:hover:text-primary-color hover:bg-primary-color hover:text-white"
               onClick={() => toggleDarkMode()}

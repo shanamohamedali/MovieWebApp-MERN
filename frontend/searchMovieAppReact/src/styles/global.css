@@ -39,7 +39,7 @@
 
 body{
     font-family: 'Roboto', sans-serif;
-    background:var(--dark-bgimage);
+    /* background:var(--dark-bgimage); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

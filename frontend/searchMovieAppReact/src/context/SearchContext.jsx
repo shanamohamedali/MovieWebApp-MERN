@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { API_URL, BASE_API } from "../constants/Constants";
+// import axios from "axios";
+// import { API_URL, BASE_API } from "../constants/Constants";
 import { useMovies } from "./MovieContext";
 // import { useDebounce } from "../hooks/useDebounce";
 

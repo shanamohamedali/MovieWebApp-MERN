@@ -37,12 +37,12 @@ export const WatchLater = () => {
                 key={data._id}
                 onMouseEnter={() => setHoveredItem(data._id)}
                 onMouseLeave={() => setHoveredItem(null)}
-                className="sm:basis-2/6 lg:basis-3/12 flex justify-center items-center bg-primary-color min-h-[250px] max-h-[600px] my-14 gap-3 relative"
+                className="sm:basis-2/6 lg:basis-3/12 flex justify-center items-center bg-primary-color min-h-[250px] max-h-[600px] my-14 gap-3 relative p-1"
               >
                 <div className="absolute right-3 top-2 cursor-pointer">
                   <FaTrashCan size={12}/>
                 </div>
-                <div className="basis-3/6 h-full">
+                <div className="basis-4/6 h-full">
                   <img
                     src={data.poster}
                     className="max-h-[500px] w-full h-full object-cover"
@@ -53,7 +53,7 @@ export const WatchLater = () => {
                   <div className="flex gap-3 flex-wrap">
                     {data.genre &&
                       data.genre.map((item) => (
-                        <div key={item._id} className="capitalize text-red-900">
+                        <div key={item._id} className="capitalize text-font-color">
                           <p>{item.title},</p>
                         </div>
                       ))}

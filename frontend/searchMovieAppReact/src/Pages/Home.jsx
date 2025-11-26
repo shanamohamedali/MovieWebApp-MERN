@@ -59,7 +59,7 @@ export function Home() {
         <div>
           <form>
             <select
-              className="bg-black"
+              className="bg-black text-white rounded-md p-[5px] dark:border-font-color"
               value={selectedValue}
               onChange={handleFilter}
             >
