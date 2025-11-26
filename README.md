@@ -1,53 +1,86 @@
-## Movie Search App (Sample Netflix Clone)
-  A movie search app developed using MERN. Where you can log in using a username and password, you can see a list of movies on the home page, search for movies, and also add movies to the watch later list.
-  
-  ![img](https://github.com/shanamohamedali/searchMovieAppReact/blob/master/Screenshot_12-1-2025_165959_localhost.jpeg)
-  ![img](https://github.com/shanamohamedali/searchMovieAppReact/blob/master/Screenshot_12-1-2025_165432_localhost.jpeg)
-  
+# 🎬 MovieWebApp-MERN
 
-  ## Features 
-  - **Forms** Login Form, Signup Form, Forget password. 
-    Form validation - On blur and submission form validation is applied.
-    on Blur, an invalid message will appear if the user enters an incorrect format.
-    If the user submits the form without filling out any field, the required message will show up in the fields.
-    In the Login Form if the user enters the correct username and password, An Access token will be generated and will save in the local storage and then the user will be redirected to the home page or admin dashboard based on the user role. Otherwise, an error message will appear. Only Authenticated users can access the home page.
-- **Admin Dashboard**
-    when the user logged in on the basis of user role the user will be directed to the admin dashoard or to the user home page.
-    In Admin Dashbord,
-     - admin can add,edit,delete and view movie details and genres.
-    In user home page ,
-     - the user can view the movies list, 
-     - they can add movies to watch later list, 
-     - they can filter on the basis of geners ,
-     - search box to search movies
-- **Movie List with Search Box**
-    On the home page, movies are listed, and also you can search for movies.
-- **Dark and Light Mode**
-   A button to switch between dark and light mode.
-- **Logout**
-   The logout button can be used to log out of the home page. if a user logs in, the user can't go back to the login page until he logs out. (Protected Router used)
+A full-stack **Movie Search and Listing Web Application** built using the **MERN stack (MongoDB, Express.js, React.js, Node.js)**.  
+This app allows users to **sign up, log in, search movies, filter by genre, add them to a Watch Later list, and manage movies/genres via an Admin Dashboard**.  
+Movie posters and images are stored securely using **Cloudinary**, and data is persisted in **MongoDB Atlas**.
 
-- ## Technologies Used
-- **JWT Tokens** - Access token used for Authentication and authorisation. Each time of the request access token will attach with request and verify at the backend. if the token is expired it will logout the user and direct the user to the login page and regenerate a new access token.
-- **React Router Dom** - To navigate between pages and for protected router
-- **Custom Hooks** - Handling input fields, and managing local storage all this is performed using customs hooks
-- **Debounce** - Debounce has been used to improve the performance and to avoid unnecessary API calls
-- **Context** -To manage state across components.
--**Axios** - to make an HTTP request to fetch data from TMDB API
-- **Tailwind CSS**- For styling and responsive user interface
-- **Vite**- for bundling and serving app
+🔗 **Live Demo:** [MovieWebApp-MERN](https://movie-web-app-mern-client.vercel.app/)
 
-- ## How to Run?
-- **Install Dependencies**
-- Run `npm install` to install the app's dependencies.
+---
 
--**Start the App**
-- Run `npm run dev` to start the app
-  
-- ##Live Link
-  [Site Link]()
-                  
-  
-  
+## 🚀 Features
 
-  
+- 🔍 **Movie Search & Listing** – Browse and search movies with a clean UI.  
+- 🎭 **Genre Filtering** – Filter movies based on genre.  
+- 👤 **User Authentication** – Sign up, log in, and manage sessions securely with **Access Tokens**.  
+- 🔑 **Role-Based Access** –  
+  - **User**: Search, filter, and save movies to Watch Later.  
+  - **Admin**: Full CRUD operations on movies and genres.  
+- 📌 **Watch Later List** – Save movies to watch later.  
+- 🛠️ **Admin Dashboard** – Add, edit, and delete movies and genres.  
+- 🖼️ **Image Uploads with Cloudinary** – Movie posters and images are uploaded and stored in Cloudinary.  
+- 🔒 **Secure Passwords** – User passwords are encrypted using **bcrypt** before being stored in MongoDB Atlas.  
+- 🎨 **Responsive UI** – Built with React and styled using CSS/Tailwind/Bootstrap.  
+- ⚡ **RESTful API** – Backend powered by Node.js and Express.js.  
+- 🌐 **Database** – MongoDB Atlas for storing users, movies, genres, and watchlists.  
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer        | Technology |
+|--------------|------------|
+| Frontend     | React.js, CSS/Tailwind |
+| Backend      | Node.js, Express.js |
+| Database     | MongoDB Atlas |
+| Authentication | JWT (Access Tokens) |
+| Role Management | User & Admin roles |
+| Image Storage | Cloudinary |
+| Password Security | bcrypt |
+| Deployment   | Vercel |
+
+---
+
+## ⚙️ Installation & Setup
+
+Follow these steps to run the project locally:
+
+### 1️⃣ Clone the repository
+```bash
+git clone https://github.com/shanamohamedali/MovieWebApp-MERN.git
+cd MovieWebApp-MERN
+```
+
+### 2️⃣ Backend Setup
+```bash
+cd backend
+npm install
+```
+Create a `.env` file in the backend folder with:
+```
+MONGO_Db_URL=your_mongodb_atlas_connection_string
+ACCESS_TOKEN_SECRET=your_JWT_secret_key
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+```
+Run the backend:
+```bash
+npm start
+```
+
+### 3️⃣ Frontend Setup
+```bash
+cd frontend/searchMovieAppReact
+npm install
+npm start
+```
+
+## 📸 Screenshots (Optional)
+
+_Add screenshots of your app here for better presentation._
+
+
+
+Would you like me to also add **API endpoint documentation** (like `/api/movies`, `/api/genres`, `/api/auth`) so developers can quickly test your backend?
